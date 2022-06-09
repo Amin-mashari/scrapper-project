@@ -1,17 +1,20 @@
 version: "3.7"
+
 services:
   elasticsearch:
-    image: "elastic"
-    container_name: "elasticsearch_local"
-    enivronment:
+    image: elasticsearch:8.2.2
+    container_name: elasticsearch_local
+    environment:
       - xpack.security.enabled=false
+  
   kibana:
-    image: "kibana"
-    container_name: "ki"
+    image: kibana:8.2.2
+    container_name: kibana_local
     depends_on:
       - elasticsearch
+  
   searcher_pro:
     build: .
-    container_name: "searcher_project"
+    container_name: searcher_project
     depends_on:
       - elasticsearch
