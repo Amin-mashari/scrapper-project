@@ -1,0 +1,3 @@
+schedule:
+            # min hour "*st in month" *  *  day= wed,fri
+  sch_format: "* * * * *"
