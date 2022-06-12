@@ -1,3 +1,5 @@
+from time import sleep
+import traceback
 import elasticsearch
 import json
 
@@ -11,16 +13,22 @@ def check_connection():
 
 
 def savedata(data):
+    print("aa")
+    sleep(8)
 
-    if not check_connection():
-        raise ValueError("Connection failed")
-    else:
-        print("connected to elastic .!")
-
+    if not es.ping():
+        print("ping:{}".format(es.ping()))
+        print("connection Error")
+        print(traceback.format_exc())
+        exit(1)
+  
+    print("ELASTIC CONNECTED...!")
     js = json.loads(data)
     for d in js["results"]:
-        resp = es.index(index="index", document=d)
-    #     print(resp['result'])
+        # print(d)
+        # print(type(doc))
+        resp = es.index(index="test-index",document=d)
+        # print(resp['result'])
 
-    # resp = es.get(index="index")
+    # resp = es.get(index="test-index")
     # print(resp['_source'])
