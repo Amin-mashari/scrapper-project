@@ -2,14 +2,20 @@ version: "3.7"
 
 services:
   elasticsearch:
-    image: elasticsearch:8.2.2
+    image: elasticsearch:7.17.4
     container_name: elasticsearch_local
     environment:
       - xpack.security.enabled=false
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   
   kibana:
-    image: kibana:8.2.2
+    image: kibana:6.8.23
     container_name: kibana_local
+    ports:
+      - "5601:5601"
     depends_on:
       - elasticsearch
   
@@ -18,3 +24,4 @@ services:
     container_name: searcher_project
     depends_on:
       - elasticsearch
+
