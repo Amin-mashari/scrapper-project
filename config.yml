@@ -3,5 +3,5 @@ schedule:
   sch_format: "* * * * *"
 
 elastic:
-  LINK: "elasticsearch"
+  HOST: "elasticsearch"
   PORT: "9200"
