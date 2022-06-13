@@ -1,6 +1,6 @@
 from data import getdata
 from elastic import savedata
-from time import check_time
+from schedule import check_time
 
 
 def main():
