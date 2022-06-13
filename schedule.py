@@ -12,5 +12,5 @@ def check_time():
     while True:
         now = datetime.now()
 
-        if croniter.match((read_conf_data()["schedule"]["sch_format"]), now):
+        if croniter.match((read_conf_data("config.yml")["schedule"]["sch_format"]), now):
             return True
