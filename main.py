@@ -1,10 +1,10 @@
-from data import getdata
+from data import fetch_data
 from elastic import savedata
 from schedule import check_time
 
 
 def main():
-    data = getdata()
+    data = fetch_data()
     savedata(data)
 
 

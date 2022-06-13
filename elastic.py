@@ -1,20 +1,23 @@
-from distutils.command.config import config
+from config import read_conf_data
 from time import sleep
 import traceback
 import elasticsearch
 import json
 
-CONF = config.read_conf_data()
+path = "config.yml"
 
 
 def load_elastic(conf):
-    LINK = "http://{}:{}".format(CONF["elastic"]
-                                 ["LINK"], CONF["elastic"]["PORT"])
+    # print("CONF:::")
+    # print(conf)
+
+    LINK = "http://{}:{}".format(conf["elastic"]
+                                 ["HOST"], conf["elastic"]["PORT"])
     return elasticsearch.Elasticsearch(LINK)
 
 
 def check_connection():
-    es = load_elastic()
+    es = load_elastic(read_conf_data(path))
 
     if es.ping():
         return True
@@ -23,11 +26,13 @@ def check_connection():
 
 def save_in_elstic(d):
 
-    es = load_elastic()
-    es.index(index="test-index", document=d)
+    es = load_elastic(read_conf_data(path))
+    resp = es.index(index="test-index", document=d)
+    # print(resp['result'])
+
 
 def savedata(data):
-    print("aa")
+    print("wait for connection...")
     sleep(8)
 
     if not check_connection():
@@ -37,12 +42,10 @@ def savedata(data):
         exit(1)
 
     print("ELASTIC CONNECTED...!")
-    js = json.loads(data)
-    for d in js["results"]:
+    for d in data["results"]:
         # print(d)
-        # print(type(doc))
         save_in_elstic(d)
-        # print(resp['result'])
 
-    # resp = es.get(index="test-index")
-    # print(resp['_source'])
+    print("data puting has done..")
+
+
